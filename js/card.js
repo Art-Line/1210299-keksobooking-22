@@ -17,7 +17,7 @@ const addTextContent = (place, elem, objField, text) => {
     return item.textContent = objField;
   }
   return place.removeChild(item);
-}
+};
 
 const addAvatar = (place, elem, objField) => {
   const item = place.querySelector(elem);
@@ -25,7 +25,7 @@ const addAvatar = (place, elem, objField) => {
     return item.src = objField;
   }
   return place.removeChild(item);
-}
+};
 
 const addType = (place, elem, objField) => {
   const item = place.querySelector(elem);
@@ -33,7 +33,7 @@ const addType = (place, elem, objField) => {
     return item.textContent = PROPERTY_TYPES_KEY[objField];
   }
   return place.removeChild(item);
-}
+};
 
 const addFeatures = (place, elem, objField) => {
   const item = place.querySelector(elem);
@@ -46,7 +46,7 @@ const addFeatures = (place, elem, objField) => {
     return;
   }
   return place.removeChild(item);
-}
+};
 
 const addPhotos = (place, elem, objField) => {
   const item = place.querySelector(elem);
@@ -59,7 +59,7 @@ const addPhotos = (place, elem, objField) => {
     return;
   }
   return place.removeChild(item);
-}
+};
 
 const addTime = (place, elem, checkin, checkout) => {
   const item = place.querySelector(elem);
@@ -71,7 +71,7 @@ const addTime = (place, elem, checkin, checkout) => {
     return item.textContent = `Выезд до ${checkout}`;
   }
   return place.removeChild(item);
-}
+};
 
 const addCapacity = (place, elem, objRooms, objGuests) => {
   const item = place.querySelector(elem);
@@ -96,7 +96,7 @@ const addCapacity = (place, elem, objRooms, objGuests) => {
     return item.textContent = `Для ${objGuests} гостей`;
   }
   return place.removeChild(item);
-}
+};
 
 const createCard = (obj) => {
   const cardTemplateClone = cardTemplate.cloneNode(true);
@@ -111,6 +111,6 @@ const createCard = (obj) => {
   addTime(cardTemplateClone, '.popup__text--time', obj.offer.checkin, obj.offer.checkout);
   addPhotos(cardTemplateClone, '.popup__photos', obj.offer.photos);
   return cardTemplateClone;
-}
+};
 
 export { createCard }

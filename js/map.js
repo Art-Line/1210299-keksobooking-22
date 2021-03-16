@@ -1,13 +1,14 @@
 /* global L:readonly */
-import { address } from './form.js';
-import { enableForms } from './settings.js';
+import { address, enableForm } from './form.js';
+import { enableFilter, filterAds } from './filter.js';
 import { createCard } from './card.js';
 
 const DEFAULT_LAT = 35.6817;
 const DEFAULT_LNG = 139.75388;
-const DEFAULT_SCALE = 13;
+const DEFAULT_SCALE = 9;
 const PIN_SIZE = 40;
 const MAIN_PIN_SIZE = 52;
+const VISIBLE_ADS = 10;
 
 const centeredPin = (size) => size / 2;
 const map = L.map('map-canvas');
@@ -15,13 +16,13 @@ const map = L.map('map-canvas');
 //  setAddress
 const setAddress = () => {
   address.value = `${DEFAULT_LAT}, ${DEFAULT_LNG}`;
-}
+};
 
 //  mapLoad
 const mapLoad = () => {
 
   map.on('load', () => {
-    enableForms();
+    enableForm();
     setAddress();
   })
     .setView({
@@ -36,7 +37,7 @@ const mapLoad = () => {
     },
   ).addTo(map);
 
-}
+};
 
 //  setMainMarker
 const setMainMarker = () => {
@@ -69,7 +70,7 @@ const setMainMarker = () => {
 
   return mainMarker;
 
-}
+};
 
 // setMainMarker start & retun marker for resetMainMarker
 const mainPin = setMainMarker();
@@ -81,38 +82,52 @@ const resetMainMarker = () => {
     lat: DEFAULT_LAT,
     lng: DEFAULT_LNG,
   }, DEFAULT_SCALE);
+  map.closePopup();
 };
+
+
+const layerMarkers = L.layerGroup().addTo(map);
 
 //  renderPinsOnMap
 const renderPinsOnMap = (adverts) => {
+
+  enableFilter();
+  //layerMarkers.clearLayers();
 
   const pinIcon = L.icon({
     iconUrl: '../img/pin.svg',
     iconSize: [PIN_SIZE, PIN_SIZE],
     iconAnchor: [centeredPin(PIN_SIZE), PIN_SIZE],
   });
-
-  adverts.forEach((item) => {
-    const marker = L.marker(
-      {
-        lat: item.location.lat,
-        lng: item.location.lng,
-      },
-      {
-        icon: pinIcon,
-      },
-    );
-    marker
-      .addTo(map)
-      .bindPopup(
-        createCard(item),
+  adverts
+    //.filter(filterAds)
+    .slice(0, VISIBLE_ADS)
+    .forEach((item) => {
+      let marker = L.marker(
         {
-          keepInView: true,
+          lat: item.location.lat,
+          lng: item.location.lng,
         },
-      )
-  });
+        {
+          icon: pinIcon,
+        },
+      );
+      marker
+        .addTo(layerMarkers)
+        .bindPopup(
+          createCard(item),
+          {
+            keepInView: true,
+          },
+        );
+    });
+};
 
-}
+const updatePinsOnMap = (adverts) => {
+  layerMarkers.clearLayers();
+  const filteredAdverts = adverts.slice(0, VISIBLE_ADS).filter(filterAds);
+  renderPinsOnMap(filteredAdverts);
+};
 
 
-export { renderPinsOnMap, mapLoad, setAddress, setMainMarker, resetMainMarker }
+export { renderPinsOnMap, mapLoad, setAddress, setMainMarker, resetMainMarker, updatePinsOnMap }

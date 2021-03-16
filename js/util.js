@@ -1,9 +1,11 @@
+const ALERT_SHOW_TIME = 5000;
+
 const getRandomFloat = (min, max, decimal) => {
   if (max > min && min >= 0) {
     return (Math.random() * (max - min) + min).toFixed(decimal);
   }
   throw new Error('Input data error');
-}
+};
 
 const getRandom = (min, max) => getRandomFloat(min, max, 0);
 
@@ -15,13 +17,11 @@ const removeChildElements = (item) => {
   while (item.firstChild) {
     item.removeChild(item.firstChild);
   }
-}
+};
 
 const isEscEvent = (evt) => {
   return evt.key === 'Escape' || evt.key === 'Esc';
 };
-
-const ALERT_SHOW_TIME = 5000;
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -39,7 +39,6 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
-
+};
 
 export { getRandomFloat, getRandom, getRandomArrayElement, getRandomArrayLength, removeChildElements, isEscEvent, showAlert }

@@ -42,7 +42,7 @@ const setFilterChange = (cb) => {
   });
 };
 
-function filterAds(item) {
+const filterAds = (item) => {
 
   const filterByTypes = () => {
     if (item.offer.type === housingType.value || housingType.value === 'any') {

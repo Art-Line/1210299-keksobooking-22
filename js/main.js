@@ -1,13 +1,16 @@
-import { disableForms } from './settings.js';
 import './form.js';
+import './filter.js';
 import { getData } from './api.js';
-import { mapLoad, renderPinsOnMap } from './map.js';
+import { mapLoad, renderPinsOnMap, updatePinsOnMap } from './map.js';
 import { showAlert } from './util.js';
+import { setFilterChange } from './filter.js';
 
-disableForms();
 mapLoad();
 
 getData(
-  (ads) => renderPinsOnMap(ads),
+  (ads) => {
+    renderPinsOnMap(ads);
+    setFilterChange(() => updatePinsOnMap(ads));
+  },
   () => showAlert('Ошибка загрузки данных'),
 );

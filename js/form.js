@@ -3,17 +3,17 @@ import { successPopup, errorPopup } from './popup.js';
 import { setAddress, resetMainMarker } from './map.js';
 
 const MAX_PRICE = 1000000;
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const MAX_ROOMS_NUMBER = 100;
 const minPrices = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
   palace: 10000,
-}
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
-const MAX_ROOMS_NUMBER = 100;
-
+};
 const form = document.querySelector('.ad-form');
+const formElements = Array.from(form.children);
 const title = form.querySelector('#title');
 const address = form.querySelector('#address');
 const type = form.querySelector('#type');
@@ -24,19 +24,33 @@ const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 const buttonReset = form.querySelector('.ad-form__reset');
 
+const disableForm = () => {
+  form.classList.add('ad-form--disabled');
+  formElements.forEach((item) => {
+    item.disabled = true;
+  });
+};
+
+const enableForm = () => {
+  form.classList.remove('ad-form--disabled');
+  formElements.forEach((item) => {
+    item.disabled = false;
+  });
+};
+
 const validatePrice = () => {
   price.setAttribute('placeholder', minPrices[type.value]);
   price.setAttribute('min', minPrices[type.value]);
   price.setAttribute('max', MAX_PRICE);
-}
+};
 
 const validateTimeIn = () => {
   timeOut.value = timeIn.value;
-}
+};
 
 const validateTimeOut = () => {
   timeIn.value = timeOut.value;
-}
+};
 
 const validateTitle = (item) => {
   const valueLength = item.value.length;
@@ -48,8 +62,7 @@ const validateTitle = (item) => {
     item.setCustomValidity('');
   }
   item.reportValidity();
-}
-
+};
 
 const validateRoomNumber = () => {
   if (parseInt(roomNumber.value) === MAX_ROOMS_NUMBER) {
@@ -73,17 +86,13 @@ const validateRoomNumber = () => {
       }
     }
   }
-}
+};
 
 type.addEventListener('change', () => validatePrice());
 timeIn.addEventListener('change', () => validateTimeIn());
 timeOut.addEventListener('change', () => validateTimeOut());
 title.addEventListener('input', () => validateTitle(title));
 roomNumber.addEventListener('change', () => validateRoomNumber());
-
-validatePrice();
-validateRoomNumber();
-address.readOnly = true;
 
 const setAdFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
@@ -107,7 +116,11 @@ const setAdFormReset = () => {
   })
 };
 
+address.readOnly = true;
+disableForm();
+validatePrice();
+validateRoomNumber();
 setAdFormSubmit();
 setAdFormReset();
 
-export { address };
+export { address, enableForm };

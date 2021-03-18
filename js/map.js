@@ -92,7 +92,6 @@ const layerMarkers = L.layerGroup().addTo(map);
 const renderPinsOnMap = (adverts) => {
 
   enableFilter();
-  //layerMarkers.clearLayers();
 
   const pinIcon = L.icon({
     iconUrl: '../img/pin.svg',
@@ -100,7 +99,6 @@ const renderPinsOnMap = (adverts) => {
     iconAnchor: [centeredPin(PIN_SIZE), PIN_SIZE],
   });
   adverts
-    //.filter(filterAds)
     .slice(0, VISIBLE_ADS)
     .forEach((item) => {
       let marker = L.marker(
@@ -125,7 +123,7 @@ const renderPinsOnMap = (adverts) => {
 
 const updatePinsOnMap = (adverts) => {
   layerMarkers.clearLayers();
-  const filteredAdverts = adverts.slice(0, VISIBLE_ADS).filter(filterAds);
+  const filteredAdverts = adverts.filter(filterAds);
   renderPinsOnMap(filteredAdverts);
 };
 

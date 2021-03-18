@@ -1,6 +1,6 @@
 import { removeChildElements } from './util.js';
 
-const PROPERTY_TYPES_KEY = {
+const propertyTypesKey = {
   bungalow: 'Бунгало',
   flat: 'Квартира',
   house: 'Дом',
@@ -30,7 +30,7 @@ const addAvatar = (place, elem, objField) => {
 const addType = (place, elem, objField) => {
   const item = place.querySelector(elem);
   if (objField) {
-    return item.textContent = PROPERTY_TYPES_KEY[objField];
+    return item.textContent = propertyTypesKey[objField];
   }
   return place.removeChild(item);
 };

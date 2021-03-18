@@ -1,5 +1,6 @@
 /* global _:readonly */
 import './form.js';
+import './photo.js';
 import './filter.js';
 import { getData } from './api.js';
 import { mapLoad, renderPinsOnMap, updatePinsOnMap } from './map.js';
@@ -20,5 +21,3 @@ getData(
   },
   () => showAlert('Ошибка загрузки данных'),
 );
-
-

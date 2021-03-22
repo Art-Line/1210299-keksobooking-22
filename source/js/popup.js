@@ -18,19 +18,21 @@ const popup = (item, button) => {
     }
   };
 
+  const onModalClick = () => closeUserModal();
+
   const closeUserModal = () => {
     modal.classList.add('hidden');
     if (button) {
-      button.removeEventListener('click', closeUserModal);
+      button.removeEventListener('click', onModalClick);
     }
-    modal.removeEventListener('click', closeUserModal);
+    modal.removeEventListener('click', onModalClick);
     document.removeEventListener('keydown', onPopupEscKeydown);
   };
 
   if (button) {
-    buttonClose.addEventListener('click', closeUserModal);
+    buttonClose.addEventListener('click', onModalClick);
   }
-  modal.addEventListener('click', closeUserModal);
+  modal.addEventListener('click', onModalClick);
   document.addEventListener('keydown', onPopupEscKeydown);
 
 };

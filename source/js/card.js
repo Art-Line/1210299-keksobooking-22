@@ -1,5 +1,11 @@
 import { removeChildElements } from './util.js';
 
+const NUMBER_ONE = 1;
+const NUMBER_TWO = 2;
+const NUMBER_FOUR = 4;
+const NUMBER_TEN = 10;
+const NUMBER_TWENTY = 20;
+
 const propertyToTypesMap = {
   bungalow: 'Бунгало',
   flat: 'Квартира',
@@ -83,9 +89,9 @@ const addCapacity = (place, elem, objRooms, objGuests) => {
     summaSymbols = lastSymbol + penultSymbol;
   }
   let textRoom = 'комнат';
-  if (lastSymbol === 1 && summaSymbols !== 2) {
+  if (lastSymbol === NUMBER_ONE && summaSymbols !== NUMBER_TWO) {
     textRoom = 'комната';
-  } else if (lastSymbol >= 2 && lastSymbol <= 4 && !(lastTwoSymbols >= 10 && lastTwoSymbols <= 20)) {
+  } else if (lastSymbol >= NUMBER_TWO && lastSymbol <= NUMBER_FOUR && !(lastTwoSymbols >= NUMBER_TEN && lastTwoSymbols <= NUMBER_TWENTY)) {
     textRoom = 'комнаты';
   }
   if (objRooms && objGuests) {

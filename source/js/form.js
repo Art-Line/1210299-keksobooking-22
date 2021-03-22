@@ -2,6 +2,7 @@ import { sendData } from './api.js';
 import { successPopup, errorPopup } from './popup.js';
 import { setAddress, resetMainMarker } from './map.js';
 import { resetAvatarImg, resetPhotoAdsImg } from './photo.js';
+import { filterForm } from './filter.js';
 
 const MAX_PRICE = 1000000;
 const MIN_TITLE_LENGTH = 30;
@@ -91,7 +92,7 @@ const setAdFormSubmit = () => {
     evt.preventDefault();
     sendData(
       () => {
-        successPopup(), form.reset(), resetPhotoAdsImg(), resetAvatarImg(), setAddress(), validatePrice(), validateRoomNumber(), resetMainMarker()
+        successPopup(), form.reset(), filterForm.reset(), resetPhotoAdsImg(), resetAvatarImg(), setAddress(), validatePrice(), validateRoomNumber(), resetMainMarker()
       },
       () => errorPopup(),
       new FormData(evt.target),
@@ -102,6 +103,7 @@ const setAdFormSubmit = () => {
 const setAdFormReset = () => {
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
+    filterForm.reset();
     form.reset();
     resetPhotoAdsImg();
     resetAvatarImg();

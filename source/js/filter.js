@@ -45,6 +45,12 @@ const setFilterChange = (cb) => {
   });
 };
 
+const setFilterReset = (cb) => {
+  filterForm.addEventListener('reset', () => {
+    cb();
+  });
+};
+
 const filterByTypes = (item) => {
   if (item.offer.type === housingType.value || housingType.value === FILTER_DEFAULT_VALUE) {
     return item;
@@ -84,4 +90,4 @@ const filterAds = (item) => {
   return filterByTypes(item) && filterByRooms(item) && filterByGuests(item) && filterByPrice(item) && filterByFeatures(item);
 };
 
-export { enableFilter, setFilterChange, filterAds }
+export { enableFilter, setFilterChange, filterAds, filterForm, setFilterReset }

@@ -9,18 +9,17 @@ const DEFAULT_SCALE = 9;
 const PIN_SIZE = 40;
 const MAIN_PIN_SIZE = 52;
 const VISIBLE_ADS = 10;
+const PIN_IMG = './img/pin.svg';
+const MAIN_PIN_IMG = './img/main-pin.svg';
 
 const centeredPin = (size) => size / 2;
 const map = L.map('map-canvas');
 
-//  setAddress
 const setAddress = () => {
   address.value = `${DEFAULT_LAT}, ${DEFAULT_LNG}`;
 };
 
-//  mapLoad
 const mapLoad = () => {
-
   map.on('load', () => {
     enableForm();
     setAddress();
@@ -36,14 +35,12 @@ const mapLoad = () => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-
 };
 
-//  setMainMarker
 const setMainMarker = () => {
 
   const mainPinIcon = L.icon({
-    iconUrl: '../img/main-pin.svg',
+    iconUrl: MAIN_PIN_IMG,
     iconSize: [MAIN_PIN_SIZE, MAIN_PIN_SIZE],
     iconAnchor: [centeredPin(MAIN_PIN_SIZE), MAIN_PIN_SIZE],
   });
@@ -72,10 +69,8 @@ const setMainMarker = () => {
 
 };
 
-// setMainMarker start & retun marker for resetMainMarker
 const mainPin = setMainMarker();
 
-//  resetMainMarker
 const resetMainMarker = () => {
   mainPin.setLatLng([DEFAULT_LAT, DEFAULT_LNG]).update();
   map.setView({
@@ -85,16 +80,12 @@ const resetMainMarker = () => {
   map.closePopup();
 };
 
-
 const layerMarkers = L.layerGroup().addTo(map);
 
-//  renderPinsOnMap
 const renderPinsOnMap = (adverts) => {
-
   enableFilter();
-
   const pinIcon = L.icon({
-    iconUrl: '../img/pin.svg',
+    iconUrl: PIN_IMG,
     iconSize: [PIN_SIZE, PIN_SIZE],
     iconAnchor: [centeredPin(PIN_SIZE), PIN_SIZE],
   });
@@ -126,6 +117,5 @@ const updatePinsOnMap = (adverts) => {
   const filteredAdverts = adverts.filter(filterAds);
   renderPinsOnMap(filteredAdverts);
 };
-
 
 export { renderPinsOnMap, mapLoad, setAddress, setMainMarker, resetMainMarker, updatePinsOnMap }

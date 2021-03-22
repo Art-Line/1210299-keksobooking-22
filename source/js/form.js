@@ -7,12 +7,13 @@ const MAX_PRICE = 1000000;
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS_NUMBER = 100;
-const minPrices = {
+const typeToPriceMap = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
   palace: 10000,
 };
+
 const form = document.querySelector('.ad-form');
 const formElements = Array.from(form.children);
 const title = form.querySelector('#title');
@@ -40,8 +41,8 @@ const enableForm = () => {
 };
 
 const validatePrice = () => {
-  price.setAttribute('placeholder', minPrices[type.value]);
-  price.setAttribute('min', minPrices[type.value]);
+  price.setAttribute('placeholder', typeToPriceMap[type.value]);
+  price.setAttribute('min', typeToPriceMap[type.value]);
   price.setAttribute('max', MAX_PRICE);
 };
 
@@ -68,24 +69,14 @@ const validateTitle = (item) => {
 const validateRoomNumber = () => {
   if (parseInt(roomNumber.value) === MAX_ROOMS_NUMBER) {
     capacity.value = 0;
-    for (let i = 0; i < capacity.options.length; i++) {
-      let capacityOptions = capacity.options[i];
-      if (parseInt(roomNumber.value) > parseInt(capacityOptions.value) && parseInt(capacityOptions.value) !== 0) {
-        capacityOptions.disabled = true;
-      } else {
-        capacityOptions.disabled = false;
-      }
-    }
+    Array.from(capacity.options).forEach(item => {
+      item.disabled = parseInt(roomNumber.value) > parseInt(item.value) && parseInt(item.value) !== 0;
+    });
   } else {
     capacity.value = roomNumber.value;
-    for (let i = 0; i < capacity.options.length; i++) {
-      let capacityOptions = capacity.options[i];
-      if (parseInt(roomNumber.value) < parseInt(capacityOptions.value) || parseInt(capacityOptions.value) === 0) {
-        capacityOptions.disabled = true;
-      } else {
-        capacityOptions.disabled = false;
-      }
-    }
+    Array.from(capacity.options).forEach(item => {
+      item.disabled = parseInt(roomNumber.value) < parseInt(item.value) || parseInt(item.value) === 0;
+    });
   }
 };
 

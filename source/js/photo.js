@@ -3,7 +3,7 @@ import { removeChildElements } from './util.js';
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const IMG_WIDTH = 40;
 const IMG_HEIGHT = 40;
-const DEFAULT_AVATAR_IMG = 'img/muffin-grey.svg';
+const DEFAULT_AVATAR_IMG = './img/muffin-grey.svg';
 
 const fileAvatarChooser = document.querySelector('.ad-form-header__input');
 const previewAvatarContainer = document.querySelector('.ad-form-header__preview');

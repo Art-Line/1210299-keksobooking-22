@@ -1,6 +1,6 @@
 import { removeChildElements } from './util.js';
 
-const propertyTypesKey = {
+const propertyToTypesMap = {
   bungalow: 'Бунгало',
   flat: 'Квартира',
   house: 'Дом',
@@ -30,7 +30,7 @@ const addAvatar = (place, elem, objField) => {
 const addType = (place, elem, objField) => {
   const item = place.querySelector(elem);
   if (objField) {
-    return item.textContent = propertyTypesKey[objField];
+    return item.textContent = propertyToTypesMap[objField];
   }
   return place.removeChild(item);
 };
@@ -39,10 +39,10 @@ const addFeatures = (place, elem, objField) => {
   const item = place.querySelector(elem);
   if (objField) {
     removeChildElements(item);
-    for (let i = 0; i < objField.length; i++) {
-      const createElem = `<li class="popup__feature popup__feature--${objField[i]}"></li>`
+    objField.forEach((objItem) => {
+      const createElem = `<li class="popup__feature popup__feature--${objItem}"></li>`
       item.insertAdjacentHTML('beforeend', createElem);
-    }
+    });
     return;
   }
   return place.removeChild(item);
@@ -52,10 +52,10 @@ const addPhotos = (place, elem, objField) => {
   const item = place.querySelector(elem);
   if (objField) {
     removeChildElements(item);
-    for (let i = 0; i < objField.length; i++) {
-      const createElem = `<img src="${objField[i]}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`
+    objField.forEach((objItem) => {
+      const createElem = `<img src="${objItem}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`
       item.insertAdjacentHTML('beforeend', createElem);
-    }
+    });
     return;
   }
   return place.removeChild(item);

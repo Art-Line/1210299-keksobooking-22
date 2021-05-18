@@ -7,7 +7,7 @@ import { mapLoad, renderPinsOnMap, updatePinsOnMap } from './map.js';
 import { showAlert } from './util.js';
 import { setFilterChange, setFilterReset } from './filter.js';
 
-const RERENDER_DELAY = 500;
+const RERENDER_DELAY = 400;
 
 mapLoad();
 
